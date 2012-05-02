@@ -1,8 +1,13 @@
 var assembly = require("../lib/assembly"),
     express = require('express'),
-    server = express.createServer();
+    server = express.createServer(),
+    argv = require('optimist').argv;
 
-var assembler = assembly.createAssembler({src : __dirname + "/src", dest: __dirname +"/build"});
+var assembler = assembly.createAssembler({
+	src 	: __dirname + "/src", 
+	dest	: __dirname +"/build",
+	growl	: argv.growl === undefined ? false : argv.growl
+});
 assembler.use(assembly.processors.pathify);
 assembler.use(assembly.processors.amdify);
 // assembler.use(assembly.plugins.gzip);
